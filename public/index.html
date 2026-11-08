@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studentski Servis FON</title>
+<style>
+:root{--blue:#003366;--blue2:#004080;--accent:#f5a623;--bg:#f8f9fa;--card:#fff;--text:#1b2733;--muted:#5b6b7a;--line:#dde3ea;--soft:#e8f0f9;--ok:#1f8a4c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1620;--card:#16212d;--text:#e6edf4;--muted:#9fb0c0;--line:#2a3948;--soft:#1b2c40;--blue2:#5b9bd8}}
+:root[data-theme="dark"]{--bg:#0e1620;--card:#16212d;--text:#e6edf4;--muted:#9fb0c0;--line:#2a3948;--soft:#1b2c40;--blue2:#5b9bd8}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Source Sans 3","Segoe UI",system-ui,sans-serif}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0 0 .5em}
+a{color:var(--blue2)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--blue);z-index:30}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--blue);color:#fff}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;white-space:nowrap}
+.logo i{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;background:#fff;color:var(--blue);font:700 15px Georgia,serif;font-style:normal}
+nav{display:flex;gap:2px;margin-left:auto;align-items:center}
+nav a{color:#dbe7f5;text-decoration:none;padding:8px 11px;border-radius:6px;font-size:15px}
+nav a:hover,nav a:focus-visible{background:rgba(255,255,255,.14);color:#fff}
+nav a.cta{background:var(--accent);color:#1b1200;font-weight:600;margin-left:8px}
+nav a.cta small{background:#1b1200;color:var(--accent);border-radius:99px;padding:1px 7px;margin-left:6px;font-size:11px}
+.hero{background:linear-gradient(90deg,rgba(0,24,52,.9),rgba(0,32,70,.62)),url("https://nova.rs/wp-content/uploads/2022/04/13/1649858106-Tan2022-4-13_15510158_9-2048x1367.jpg") center 35%/cover,var(--blue);color:#fff;padding:56px 0 64px}
+.hero h1{font-size:clamp(28px,5vw,46px);max-width:18em}
+.hero p{font-size:19px;color:#d4e3f5;max-width:34em}
+.search{position:relative;max-width:620px;margin-top:26px}
+.search input{width:100%;padding:15px 18px;border-radius:10px;border:0;font:inherit;font-size:17px;color:#1b2733;background:#fff}
+.hint{font-size:14px;color:#bcd2ea;margin-top:8px}
+.hint button{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:99px;padding:3px 11px;margin:2px;font:inherit;font-size:14px;cursor:pointer}
+#res{background:var(--card);color:var(--text);border-radius:10px;margin-top:8px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#res a{display:block;padding:11px 16px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--line)}
+#res a:hover{background:var(--soft)}
+#res a span{display:block;font-size:13px;color:var(--muted)}
+#res p{margin:0;padding:12px 16px;color:var(--muted)}
+section.s{padding:56px 0 8px}
+section.s>.wrap>h2{font-size:clamp(24px,3.5vw,32px);color:var(--blue);border-left:5px solid var(--accent);padding-left:14px}
+:root[data-theme="dark"] section.s>.wrap>h2{color:#9cc4ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.s>.wrap>h2{color:#9cc4ee}}
+.lead{color:var(--muted);max-width:44em;margin-bottom:22px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.card h3{font-size:19px;color:var(--blue);margin-bottom:12px}
+:root[data-theme="dark"] .card h3{color:#9cc4ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card h3{color:#9cc4ee}}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 16px 46px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700}
+.steps li::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:15px}
+.chk{list-style:none;margin:0;padding:0}
+.chk label{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:3px;accent-color:var(--blue2);flex:none}
+.chk input:checked+span{text-decoration:line-through;color:var(--muted)}
+.prog{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:4px 0 8px}
+.prog div{height:100%;width:0;background:var(--ok);transition:width .25s}
+.pt{font-size:14px;color:var(--muted)}
+.pdfs{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pdfs a{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:14px;background:var(--bg)}
+.pdfs a:hover{border-color:var(--blue2)}
+.pdfs svg{width:16px;height:16px;flex:none}
+.tag{display:inline-block;background:var(--soft);color:var(--blue2);border-radius:6px;padding:2px 9px;font-size:13px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.scroll{overflow-x:auto}
+details{border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:8px}
+summary{padding:14px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-size:22px;line-height:1;color:var(--blue2)}
+details[open] summary::after{content:"−"}
+details p{margin:0;padding:0 16px 16px;color:var(--muted)}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px;font-size:12px;text-align:center}
+.map div{background:var(--soft);border-radius:6px;padding:14px 4px}
+.map .you{background:var(--accent);color:#1b1200;font-weight:700}
+footer{margin-top:56px;background:var(--blue);color:#cfe0f3;padding:26px 0;font-size:14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.dd{position:relative}
+nav .dd>button{background:none;border:0;color:#dbe7f5;font:inherit;font-size:15px;padding:8px 11px;border-radius:6px;cursor:pointer}
+nav .dd>button::after{content:" ▾";font-size:11px}
+nav .dd>button:hover,.dd.open>button{background:rgba(255,255,255,.14);color:#fff}
+.menu{display:block;visibility:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;position:absolute;top:100%;left:0;min-width:270px;background:var(--blue);border-radius:0 0 10px 10px;padding:6px;box-shadow:0 10px 24px rgba(0,0,0,.3);transition:opacity .25s ease-in-out,transform .25s ease-in-out,visibility 0s linear .25s}
+.dd:hover .menu,.dd.open .menu,.dd:focus-within .menu{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition-delay:0s}
+.dd:hover>button{background:rgba(255,255,255,.14);color:#fff}
+@media (prefers-reduced-motion:reduce){.menu{transition:none}}
+.menu a{display:block}
+@media (max-width:1100px){.bar{height:auto;flex-wrap:wrap;padding-top:8px;padding-bottom:8px;row-gap:2px}nav{margin-left:0;flex-wrap:wrap;width:100%}nav a,nav .dd>button{padding:6px 9px;font-size:14px}.menu{min-width:230px}.dd:nth-of-type(n+2) .menu{left:auto;right:0}.dd:nth-of-type(1) .menu{left:0}}
+@media (max-width:640px){.logo{font-size:15px}.dd:nth-of-type(2) .menu{left:0;right:auto}.dd:nth-of-type(3) .menu{left:auto;right:0}}
+#burger{display:none;margin-left:auto;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.card{min-width:0}td,th{word-break:break-word}
+@media (max-width:1000px){#burger{display:block}.bar{height:64px}nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--blue);flex-direction:column;align-items:stretch;gap:0;padding:6px 14px 14px;max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;box-shadow:0 12px 24px rgba(0,0,0,.3)}nav.open{display:flex}nav a,nav .dd>button{padding:13px 10px;font-size:16px;width:100%;text-align:left;border-radius:6px}nav .dd>button{display:flex;justify-content:space-between}.dd{border-bottom:1px solid rgba(255,255,255,.12)}.dd>button::after{content:"▾";transition:transform .25s}.dd.open>button::after{transform:rotate(180deg)}.menu,.dd:hover .menu,.dd:focus-within .menu{position:static;visibility:visible;opacity:1;transform:none;pointer-events:auto;box-shadow:none;background:rgba(255,255,255,.08);border-radius:8px;min-width:0;max-height:0;overflow:hidden;padding:0 6px;transition:max-height .3s ease,padding .3s ease}.dd.open .menu{max-height:420px;padding:6px}.dd:hover>button{background:none}.dd.open>button{background:rgba(255,255,255,.14)}}
+@media (max-width:640px){.wrap{padding:0 14px}.logo{font-size:15px}.hero{padding:34px 0 40px}.hero p{font-size:17px}.search input{font-size:16px;padding:13px 14px}section.s{padding:38px 0 4px}section.s>.wrap>h2{padding-left:10px}.card{padding:15px}.chk label{padding:12px 2px}.pdfs a{width:100%}td,th{font-size:14px;padding:8px 4px}summary{padding:13px 12px}details p{padding:0 12px 14px}.map{font-size:11px}footer{font-size:13px}}
+.hero h1,.hero p,.hint{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.65)}
+.hero p{color:#eef4fb}
+.hint button{background:rgba(255,255,255,.22);backdrop-filter:blur(4px);text-shadow:none}
+.search input{box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.logo img{height:40px;width:auto;border-radius:6px;background:#fff;padding:2px}
+p.miss{margin:14px 0 0;padding:10px 12px;background:var(--soft);border-radius:8px}
+@media (max-width:640px){.hero{background-position:center,65% 35%}}
+#cbtn{display:block;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;background:var(--accent);color:#1b1200;border:0;border-radius:99px;padding:13px 18px;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+#cbox{display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:26;width:min(380px,calc(100vw - 32px));height:min(540px,calc(100dvh - 100px));background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.4);flex-direction:column;overflow:hidden}
+#cbox.on{display:flex}
+#chead{background:var(--blue);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+#chead button{background:none;border:0;color:#fff;font-size:20px;cursor:pointer}
+#cmsg{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:88%;padding:9px 12px;border-radius:12px;white-space:pre-wrap;font-size:15px;line-height:1.45}
+.m.u{align-self:flex-end;background:var(--blue);color:#fff}
+.m.b{align-self:flex-start;background:var(--soft);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:99px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer}
+#cf{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+#cf input{flex:1;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:16px;background:var(--bg);color:var(--text)}
+#cf button{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:0 14px;font:inherit;font-weight:700;cursor:pointer}
+#cf button:disabled{opacity:.5}
+.cn{font-size:12px;color:var(--muted);padding:0 12px 8px}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap bar">
+  <a class="logo" href="#pocetna"><img id="lg" src="https://upload.wikimedia.org/wikipedia/sr/3/36/%D0%A4%D0%9E%D0%9D_%D0%91%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D0%B4_%28%D0%B0%D0%BC%D0%B1%D0%BB%D0%B5%D0%BC%29.png" alt="FON">Studentski Servis FON</a>
+    <button id="burger" type="button" aria-expanded="false" aria-controls="nav">☰ Meni</button><nav id="nav">
+   <div class="dd"><button type="button" aria-expanded="false">Studentski standard</button><div class="menu"><a href="#domovi">Studentski dom</a><a href="#krediti">Krediti</a><a href="#stipendije">Stipendije</a></div></div>
+   <div class="dd"><button type="button" aria-expanded="false">Studentska pitanja</button><div class="menu"><a href="#uverenje">Uverenje o studiranju</a><a href="#upis">Upis/Ispis</a><a href="#duplikat">Duplikati indeksa</a><a href="#nestandardna">Nestandardna uverenja</a></div></div>
+   <div class="dd"><button type="button" aria-expanded="false">Ispiti</button><div class="menu"><a href="#polozeni">Uverenja o položenim ispitima</a><a href="#predmeti">Prijava/Odjava predmeta za slušanje</a><a href="#prijava-ispita">Prijava/Odjava ispita</a><a href="#skolarina">Školarina</a></div></div>
+   <a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a>
+  </nav>
+ </div>
+</header>
+
+<main id="pocetna">
+<div class="hero"><div class="wrap">
+ <h1>Sve informacije i birokratija Studentske službe FON na jednom mestu</h1>
+ <p>Bez zaboravljenih papira i nepotrebnog čekanja u redovima.</p>
+ <div class="search">
+  <input id="q" type="search" placeholder="Pretražite: potvrda, obrazac 20, prosek…" aria-label="Pretraga dokumentacije i pitanja" autocomplete="off">
+  <div id="res" role="listbox"></div>
+  <div class="hint">Probajte: <button>potvrda</button><button>obrazac 20</button><button>prosek</button><button>žirant</button></div>
+ </div>
+</div></div>
+
+<section class="s" id="domovi"><div class="wrap">
+ <h2>Upis u studentske domove</h2>
+ <p class="lead">Bodovi se računaju iz uspeha na studijama i prihoda po članu domaćinstva.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako se boduje</h3>
+   <ol class="steps">
+    <li><b>Uspeh</b><span>Ostvareni ESPB i prosečna ocena donose bodove. Potvrdu o ESPB i proseku uzmite na šalteru fakulteta pre predaje prijave.</span></li>
+    <li><b>Prihod</b><span>Niži prihod po članu domaćinstva donosi više bodova. Uverenje o prihodima pripremite unapred, jer njegovo izdavanje može da potraje.</span></li>
+    <li><b>Rang lista</b><span>Bodovi se sabiraju i studenti se rangiraju. Pratite objavu preliminarne liste i rok za žalbu.</span></li>
+   </ol></div>
+  <div class="card" data-list="dom"><h3>Dokumentacija</h3></div>
+  <div class="card"><h3>Kalendar</h3>
+   <table><tr><td><span class="tag">Predaja</span></td><td>Datumi se objavljuju uz konkurs</td></tr><tr><td><span class="tag">Lista</span></td><td>Preliminarna rang lista, pa žalbe</td></tr><tr><td><span class="tag">Konačno</span></td><td>Konačna lista i useljenje</td></tr></table>
+   <div class="pdfs"><a href="https://oas.fon.bg.ac.rs/kalendar-aktivnosti/" target="_blank" rel="noopener">Kalendar aktivnosti</a></div><p class="pt">Aktuelne datume potražite u kalendaru aktivnosti.</p></div>
+ </div>
+</div></section>
+
+<section class="s" id="krediti"><div class="wrap">
+ <h2>Studentski krediti</h2>
+ <p class="lead">Kredit nije stipendija: vraća se nakon studija, a pravo na njega imaju i studenti sa nižim prosekom.</p>
+ <div class="grid">
+  <div class="card"><h3>Stipendija ili kredit</h3>
+   <table><tr><th></th><th>Stipendija</th><th>Kredit</th></tr><tr><td>Prosek</td><td>preko 8,50</td><td>nije presudan</td></tr><tr><td>Vraćanje</td><td>ne</td><td>da</td></tr><tr><td>Žirant</td><td>ne</td><td>da</td></tr></table></div>
+  <div class="card" data-list="kred"><h3>Proces i dokumentacija</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="stipendije"><div class="wrap">
+ <h2>Studentske stipendije</h2>
+ <p class="lead">Državna stipendija zavisi od uspeha i od budžetskih mesta.</p>
+ <div class="grid">
+  <div class="card"><h3>Uslovi i kriterijumi</h3>
+   <table><tr><th>Prosek</th><td>iznad 8,50</td></tr><tr><th>Godina</th><td>očišćena, bez prenetih ispita</td></tr><tr><th>Status</th><td>budžetski student, redovan upis</td></tr><tr><th>Kvota</th><td>zavisi od budžeta; rang lista po prosečnoj oceni</td></tr></table>
+   <p class="pt">Tačne iznose i rokove proverite u aktuelnom konkursu.</p></div>
+  <div class="card" data-list="stip"><h3>Papiri za prijavu</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="uverenje"><div class="wrap">
+ <h2>Uverenje o studiranju</h2>
+ <p class="lead">Potvrda da ste student: za stipendiju, zdravstveno osiguranje, dečiji dodatak ili praksu.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Podnesite zahtev</b><span>Na šalteru ili preko studentskog portala. Ponesite indeks ili ličnu kartu i navedite čemu uverenje služi.</span></li><li><b>Uplatite taksu</b><span>Ako se za vaš slučaj naplaćuje. Iznos i poziv na broj proverite na šalteru i sačuvajte potvrdu o uplati.</span></li><li><b>Preuzmite uverenje</b><span>Obično u roku od nekoliko radnih dana. Pre odlaska sa šaltera proverite ime, indeks i datume.</span></li></ol></div>
+  <div class="card" data-list="uver"><h3>Šta nosite</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="upis"><div class="wrap">
+ <h2>Upis i ispis</h2>
+ <p class="lead">Upis godine, semestra ili master studija u tri koraka. Ispis se radi molbom na šalteru. Označite papire koje već imate; lista se pamti na vašem uređaju.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako teče upis</h3>
+   <ol class="steps">
+    <li><b>Prikupite dokaze o uplatama</b><span>Uplatnice za školarinu ili ESPB, ako ih plaćate. Sačuvajte originale, napravite kopiju i proverite ime, broj indeksa i svrhu uplate.</span></li>
+    <li><b>Popunite obrazac ŠV-20</b><span>Preuzmite obrazac sa dugmeta ispod, odštampajte ga u dva primerka i popunite čitko štampanim slovima. Podaci moraju da se poklapaju sa indeksom.</span></li>
+    <li><b>Predajte na šalteru</b><span>Ponesite indeks, prijavni list, popunjene obrasce i uplatnice. Pre dolaska proverite radno vreme šaltera u sekciji Kontakt.</span></li>
+   </ol></div>
+  <div class="card" data-list="upis"><h3>Dokumentacija za upis</h3></div>
+  <div class="card" data-list="ispis"><h3>Dokumentacija za ispis</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="duplikat"><div class="wrap">
+ <h2>Duplikat indeksa</h2>
+ <p class="lead">Izgubili ili oštetili indeks? Izdaje se duplikat uz izjavu o gubitku.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Prijavite gubitak</b><span>Napišite izjavu o gubitku indeksa sa datumom i potpisom, prema uputstvu službe.</span></li><li><b>Uplatite duplikat</b><span>Uplatnica za izdavanje duplikata. Iznos i poziv na broj proverite na šalteru i sačuvajte potvrdu.</span></li><li><b>Predajte zahtev i fotografiju</b><span>Na šalteru, uz ličnu kartu. Ponesite i fotografiju ako je služba traži.</span></li><li><b>Preuzmite duplikat</b><span>Termin preuzimanja dobijate na šalteru. Pri preuzimanju proverite sve upisane podatke.</span></li></ol></div>
+  <div class="card" data-list="dupl"><h3>Šta nosite</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="nestandardna"><div class="wrap">
+ <h2>Nestandardna uverenja</h2>
+ <p class="lead">Uverenja kojih nema na standardnom spisku: na stranom jeziku, o nastavnom planu, o ESPB ili za nostrifikaciju.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Opišite šta vam treba</b><span>Jasno napišite šta uverenje treba da sadrži (jezik, period, podaci) i kojoj instituciji se predaje.</span></li><li><b>Podnesite molbu</b><span>Na šalteru ili mejlom službi. Priložite zahtev institucije, ako postoji, i navedite broj indeksa.</span></li><li><b>Sačekajte odgovor</b><span>Rok je duži nego za standardna uverenja. Sačuvajte mejl ili potvrdu o prijemu molbe.</span></li><li><b>Preuzmite uverenje</b><span>Uz dokaz o uplati, ako se naplaćuje. Proverite da li sadržaj odgovara onome što institucija traži.</span></li></ol></div>
+  <div class="card" data-list="nest"><h3>Šta nosite</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="polozeni"><div class="wrap">
+ <h2>Uverenja o položenim ispitima</h2>
+ <p class="lead">Spisak položenih ispita sa ocenama i ESPB, na srpskom ili engleskom.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Podnesite zahtev</b><span>Navedite svrhu i jezik uverenja (srpski ili engleski) i ponesite indeks.</span></li><li><b>Uplatite taksu</b><span>Poziv na broj dobijate na šalteru. Sačuvajte potvrdu o uplati.</span></li><li><b>Preuzmite uverenje</b><span>Na šalteru, uz indeks. Pre odlaska proverite da su svi ispiti i ocene tačno upisani.</span></li></ol></div>
+  <div class="card" data-list="polo"><h3>Šta nosite</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="predmeti"><div class="wrap">
+ <h2>Prijava i odjava predmeta za slušanje</h2>
+ <p class="lead">Predmete za semestar birate u studentskom sistemu u roku koji objavi služba.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Prijavite predmete</b><span>U roku koji objavi služba, preko studentskog naloga. Prijavu radite na početku semestra.</span></li><li><b>Proverite uslove i ESPB</b><span>Pogledajte preduslove predmeta i dozvoljeni zbir ESPB, pa tek onda potvrdite izbor.</span></li><li><b>Odjavite do roka</b><span>Ako menjate izbor, pre isteka roka. Sačuvajte potvrdu o prijavi (slika ekrana ili PDF).</span></li></ol></div>
+  <div class="card" data-list="prij"><h3>Pre prijave</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="prijava-ispita"><div class="wrap">
+ <h2>Prijava i odjava ispita</h2>
+ <p class="lead">Ispit prijavljujete pre svakog ispitnog roka; odjava važi do roka koji propiše služba.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Prijavite ispit</b><span>Pre isteka roka, u studentskom sistemu. Rok za svaki ispitni rok pogledajte u kalendaru aktivnosti.</span></li><li><b>Uplatite prijavu</b><span>Samo ako se ispit ponavlja. Iznos i poziv na broj proverite u sistemu ili na šalteru.</span></li><li><b>Odjavite do roka</b><span>Kasna odjava može da se računa kao izlazak. Ako ne možete da izađete na ispit, odjavite ga što pre.</span></li></ol></div>
+  <div class="card" data-list="ispit"><h3>Pre prijave</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="skolarina"><div class="wrap">
+ <h2>Školarina</h2>
+ <p class="lead">Samofinansirajući studenti plaćaju školarinu jednokratno ili u ratama; iznos je u aktuelnom cenovniku.</p>
+ <div class="grid">
+  <div class="card"><h3>Kako ide</h3><ol class="steps"><li><b>Proverite iznos</b><span>Zavisi od statusa i godine studija. Aktuelni cenovnik proverite na sajtu fakulteta ili na šalteru.</span></li><li><b>Uplatite</b><span>Jednokratno ili u ratama, sa tačnim pozivom na broj. Ako želite rate, dogovorite se sa službom pre prve uplate.</span></li><li><b>Sačuvajte potvrdu</b><span>Potrebna je pri upisu i na šalteru. Čuvajte originale svih uplatnica do kraja studija.</span></li></ol></div>
+  <div class="card" data-list="skol"><h3>Dokumentacija i uplata</h3></div>
+ </div>
+</div></section>
+
+<section class="s" id="faq"><div class="wrap">
+ <h2>Često postavljana pitanja</h2>
+ <div class="grid">
+  <div id="faq">
+   <details><summary>Šta ako izgubim indeks?</summary><p>Prijavite gubitak na šalteru i tražite duplikat indeksa. Obično su potrebni lična karta i uplatnica za duplikat.</p></details>
+   <details><summary>Kako se računa prosek za dom?</summary><p>Računa se prosek položenih ispita, uz ostvarene ESPB. Potvrdu o proseku izdaje šalter.</p></details>
+   <details><summary>Radno vreme šaltera za osnovne studije</summary><p>Radnim danima prepodne. Proverite tabelu kontakata ispod pre dolaska.</p></details>
+   <details><summary>Koliko primeraka obrasca ŠV-20 treba?</summary><p>Dva primerka obrasca ŠV-20 uz indeks i prijavni list.</p></details>
+   <details><summary>Gde dobijam potvrdu o statusu studenta?</summary><p>Na šalteru Studentske službe, ili putem studentskog portala ako je opcija dostupna.</p></details><details><summary>Kako da dobijem potvrdu o proseku?</summary><p>Potvrdu o proseku izdaje šalter Studentske službe. Ponesite indeks i navedite čemu potvrda služi (stipendija, dom, kredit).</p></details><details><summary>Do kada mogu da prijavim ili odjavim ispit?</summary><p>Rokovi se objavljuju uz svaki ispitni rok. Prijavu i odjavu radite u studentskom sistemu pre isteka roka.</p></details><details><summary>Mogu li da plaćam školarinu na rate?</summary><p>Samofinansirajući studenti mogu da plaćaju u ratama prema dogovoru sa službom. Proverite aktuelni cenovnik i uslove.</p></details><details><summary>Šta ako propustim rok za upis?</summary><p>Javite se šalteru što pre, sa molbom i obrazloženjem. Odluku o kasnijem upisu donosi služba.</p></details><details><summary>Koja je razlika između stipendije i kredita?</summary><p>Državna stipendija zavisi od proseka (preko 8,50) i budžeta i ne vraća se. Kredit se vraća posle studija i traži žiranta.</p></details><details><summary>Koliko se čeka na uverenje?</summary><p>Standardna uverenja se obično izdaju u roku od nekoliko radnih dana, a nestandardna traju duže.</p></details><details><summary>Mogu li da preuzmem dokument umesto druge osobe?</summary><p>Najčešće uz ovlašćenje i ličnu kartu, ali proverite u službi pre dolaska.</p></details><details><summary>Gde mogu da preuzmem obrasce?</summary><p>U svakoj sekciji ispod check-liste nalaze se PDF obrasci za preuzimanje i štampu.</p></details><details><summary>Kada izlazi rang lista za dom?</summary><p>Datumi se objavljuju uz konkurs. Pogledajte kalendar u sekciji Studentski dom.</p></details>
+  </div>
+ </div>
+</div></section>
+
+<section class="s" id="kontakt"><div class="wrap">
+ <h2>Kontakt i informacije</h2>
+ <div class="grid">
+  <div class="card"><h3>Radno vreme i kontakti</h3><div class="scroll"><table>
+   <tr><th>Služba</th><th>Radno vreme</th><th>Kontakt</th></tr>
+   <tr><td>OIS</td><td>09–13h</td><td>ois@fon.bg.ac.rs<br>011 000 0001</td></tr>
+   <tr><td>ISiT</td><td>09–13h</td><td>isit@fon.bg.ac.rs<br>011 000 0002</td></tr>
+   <tr><td>Master</td><td>10–14h</td><td>master@fon.bg.ac.rs<br>011 000 0003</td></tr>
+   <tr><td>Doktorske</td><td>10–13h</td><td>doktorske@fon.bg.ac.rs<br>011 000 0004</td></tr></table></div>
+   <p class="pt">Primer podataka: zamenite ih zvaničnim.</p></div>
+  <div class="card"><h3>Gde je šalter sala</h3>
+   <p>Prizemlje zgrade, desno od glavnog ulaza (šema je okvirna).</p>
+   <div class="map"><div>Amfiteatar</div><div>Hodnik</div><div>Biblioteka</div><div>Lift</div><div>Ulaz</div><div>Hol</div><div class="you">Šalter sala</div><div>Kopirnica</div></div></div>
+  <div class="card" id="forum"><h3>FON Forum <span class="tag">Uskoro</span></h3>
+   <p>Faza 2: pitanja studenata sa glasanjem, kategorijama #stipendije, #domovi, #ispiti-i-prijave i #molbe, prijava preko @fon.bg.ac.rs naloga i oznaka „Zvaničan odgovor“ za Studentsku službu.</p></div>
+ </div>
+</div></section>
+</main>
+<footer><div class="wrap">Studentski Servis FON · neslužbeni informativni portal. Proverite podatke u Studentskoj službi.</div></footer>
+
+<button id="cbtn" type="button" aria-controls="cbox">Pitajte asistenta</button>
+<div id="cbox" role="dialog" aria-label="Asistent Studentske službe"><div id="chead"><span>Asistent Studentske službe</span><button id="cx" type="button" aria-label="Zatvori">×</button></div><div id="cmsg"></div><div class="cn">Automatski odgovor, informativnog karaktera. Ne unosite lične podatke.</div><form id="cf"><input id="ci" placeholder="Postavite pitanje…" autocomplete="off" aria-label="Pitanje"><button id="cs" type="submit">Pošalji</button></form></div>
+<script>
+var PDF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>';
+var LISTS={};Object.assign(LISTS,{"uver": {"items": ["Indeks ili lična karta", "Popunjen zahtev za uverenje", "Dokaz o uplati takse (ako se plaća)"], "pdf": ["Zahtev za uverenje o studiranju.pdf"]}, "ispis": {"items": ["Indeks", "Molba za ispis", "Lična karta", "Potvrda o izmirenim obavezama (biblioteka, školarina)"], "pdf": ["Molba za ispis.pdf"]}, "dupl": {"items": ["Lična karta", "Izjava o gubitku indeksa", "Uplatnica za duplikat", "Fotografija"], "pdf": ["Zahtev za duplikat indeksa.pdf"]}, "nest": {"items": ["Molba sa obrazloženjem i svrhom", "Indeks", "Dokaz o uplati (ako se plaća)", "Zahtev institucije koja traži uverenje"], "pdf": ["Molba za nestandardno uverenje.pdf"]}, "polo": {"items": ["Indeks", "Popunjen zahtev", "Uplatnica", "Označena svrha i jezik uverenja"], "pdf": ["Zahtev za uverenje o položenim ispitima.pdf"]}, "prij": {"items": ["Studentski nalog (prijava radi)", "Proveren plan i preduslovi predmeta", "Zbir ESPB u dozvoljenom okviru", "Sačuvana potvrda prijave"], "pdf": ["Uputstvo za prijavu predmeta.pdf"]}, "ispit": {"items": ["Studentski nalog", "Ispunjene predispitne obaveze", "Uplata prijave za ponovljeni ispit", "Proveren raspored ispita"], "pdf": ["Kalendar aktivnosti|https://oas.fon.bg.ac.rs/kalendar-aktivnosti/"]}, "skol": {"items": ["Poziv na broj sa uplatnice", "Potvrda o uplati", "Dogovor o plaćanju na rate (ako postoji)"], "pdf": ["Uputstvo za plaćanje školarine.pdf"]}});var _L={
+ upis:{items:["Indeks","2 × obrazac ŠV-20","Uplatnica za ESPB","Prijavni list"],pdf:["Molba dekanskom kolegijumu.pdf","Obrazac ŠV-20 (2026/27)|https://oas.fon.bg.ac.rs/wp-content/uploads/2026/09/SV20-2026-27-pdf-8.pdf"]},
+ stip:{items:["Obrazac br. 1","Uverenje o proseku (izdaje šalter FON-a)","Uverenje o prihodu po članu domaćinstva (opština)","Svedočanstva / potvrda o redovnom upisu"],pdf:["Obrazac br. 1.pdf","Obrazac br. 2|https://prosveta.gov.rs/wp-content/uploads/2018/06/img111.pdf","Uverenje o prihodima|https://sc-api.lav-djuric.me/uploads/Uverenje_o_prihodima_b457d5cd1f.pdf?updated_at=2023-07-04T07%3A58%3A41.128Z","Konkurs za stipendije.pdf"]},
+ kred:{items:["Prijava za kredit","Menica i menično ovlašćenje","Podaci i dokumenta o žirantima","Potvrda o upisu"],pdf:["Obrazac za kredit.pdf","Ugovor o kreditu.pdf"]},
+ dom:{items:["Potvrda sa fakulteta o ESPB i proseku","Prihod po članu domaćinstva","Lekarski pregled (Studentska poliklinika)"],pdf:["Prijava za studentski dom|https://oas.fon.bg.ac.rs/wp-content/uploads/2025/11/Prijava-za-studentski-dom.pdf","Uverenje o prihodima|https://sc-api.lav-djuric.me/uploads/Uverenje_o_prihodima_b457d5cd1f.pdf?updated_at=2023-07-04T07%3A58%3A41.128Z"]}
+};
+Object.assign(LISTS,_L);
+var $=function(s){return document.querySelector(s)};
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem(k))}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+document.querySelectorAll("[data-list]").forEach(function(box){
+ var id=box.dataset.list,L=LISTS[id],saved=store("fon-"+id)||[];
+ var h='<div class="prog"><div></div></div><div class="pt"></div><ul class="chk">';
+ L.items.forEach(function(t,i){h+='<li><label><input type="checkbox" data-i="'+i+'"'+(saved.indexOf(i)>-1?' checked':'')+'><span>'+t+'</span></label></li>'});
+ var ok=L.pdf.filter(function(p){return p.indexOf("|")>0}),no=L.pdf.filter(function(p){return p.indexOf("|")<0}).map(function(p){return p.replace(/\.pdf$/,"")});
+ h+='</ul>'+(ok.length?'<div class="pdfs">'+ok.map(function(p){var a=p.split("|");return '<a href="'+a[1]+'" target="_blank" rel="noopener">'+PDF+a[0]+'</a>'}).join('')+'</div>':'')+(no.length?'<p class="pt miss">Nema obrasca za preuzimanje: <b>'+no.join(", ")+'</b>. Nabavite ga na šalteru Studentske službe FON.</p>':'');
+ box.insertAdjacentHTML("beforeend",h);
+ function upd(){var c=[].map.call(box.querySelectorAll("input:checked"),function(x){return +x.dataset.i});store("fon-"+id,c);box.querySelector(".prog div").style.width=c.length/L.items.length*100+"%";box.querySelector(".pt").textContent="Spremno "+c.length+" od "+L.items.length+(c.length==L.items.length?" · možete doći na šalter":"")}
+ box.addEventListener("change",upd);upd();
+});
+document.querySelectorAll(".dd>button").forEach(function(b){b.onclick=function(){var d=b.parentNode,o=!d.classList.contains("open");document.querySelectorAll(".dd.open").forEach(function(x){x.classList.remove("open")});if(o)d.classList.add("open");b.setAttribute("aria-expanded",o)}});
+if(matchMedia("(hover:hover) and (min-width:1001px)").matches)document.querySelectorAll(".dd").forEach(function(d){d.addEventListener("mouseleave",function(){d.classList.remove("open")})});
+$("#burger").onclick=function(){var o=$("#nav").classList.toggle("open");this.setAttribute("aria-expanded",o);this.textContent=o?"✕ Zatvori":"☰ Meni"};
+$("#nav").addEventListener("click",function(e){if(e.target.tagName=="A"){this.classList.remove("open");$("#burger").textContent="☰ Meni";document.querySelectorAll(".dd.open").forEach(function(x){x.classList.remove("open")})}});
+
+var SEC={upis:"upis",ispis:"upis",stip:"stipendije",kred:"krediti",dom:"domovi",uver:"uverenje",dupl:"duplikat",nest:"nestandardna",polo:"polozeni",prij:"predmeti",ispit:"prijava-ispita",skol:"skolarina"};var IDX=[];
+Object.keys(LISTS).forEach(function(k){var s=SEC[k];LISTS[k].items.concat(LISTS[k].pdf).forEach(function(t){IDX.push({t:t.split("|")[0],s:s})})});
+document.querySelectorAll("#faq details").forEach(function(d){IDX.push({t:d.querySelector("summary").textContent,s:"faq",d:d,x:d.querySelector("p").textContent})});
+function norm(s){return s.toLowerCase().replace(/š/g,"s").replace(/č|ć/g,"c").replace(/ž/g,"z").replace(/đ/g,"dj").replace(/š/g,"s")}
+var secName={uverenje:"Uverenje o studiranju",duplikat:"Duplikat indeksa",nestandardna:"Nestandardna uverenja",polozeni:"Položeni ispiti",predmeti:"Prijava predmeta","prijava-ispita":"Prijava ispita",skolarina:"Školarina",upis:"Upis/Ispis",stipendije:"Stipendije",krediti:"Krediti",domovi:"Upis u domove",faq:"FAQ"};
+function find(){
+ var q=norm($("#q").value.trim()),r=$("#res");
+ if(!q){r.style.display="none";return}
+ var terms=q.split(/\s+/),hits=IDX.filter(function(e){var h=norm(e.t+" "+(e.x||"")+(e.t.indexOf("ŠV-20")>-1?" obrazac 20":"")+(/prosek/i.test(e.t)?" prosek":""));return terms.every(function(t){return h.indexOf(t)>-1})});
+ r.style.display="block";
+ r.innerHTML=hits.length?hits.slice(0,7).map(function(e,i){return '<a href="#'+e.s+'" data-i="'+IDX.indexOf(e)+'">'+e.t+'<span>'+secName[e.s]+'</span></a>'}).join(""):"<p>Nema rezultata. Probajte drugu reč ili pogledajte kontakt.</p>";
+}
+$("#q").addEventListener("input",find);
+$("#res").addEventListener("click",function(e){var a=e.target.closest("a");if(a){var x=IDX[a.dataset.i];if(x&&x.d)x.d.open=true;$("#res").style.display="none"}});
+document.querySelectorAll(".hint button").forEach(function(b){b.onclick=function(){$("#q").value=b.textContent;find()}});
+
+(function(){var g=$("#lg");function f(){var i=document.createElement("i");i.textContent="FON";g.replaceWith(i)}g.addEventListener("error",f);if(g.complete&&!g.naturalWidth)f()})();
+(function(){
+var sample=null,hist=[],busy=false,box=$("#cbox"),msg=$("#cmsg");
+function add(c,t){var d=document.createElement("div");d.className="m "+c;d.textContent=t;msg.appendChild(d);msg.scrollTop=msg.scrollHeight;return d}
+function intro(){add("b","Zdravo! Pitajte me o upisu, stipendijama, kreditima, domovima, uverenjima, ispitima ili školarini.");var c=document.createElement("div");c.className="chips";["Šta mi treba za upis?","Kako se prijavljuje ispit?","Kako do duplikata indeksa?"].forEach(function(q){var b=document.createElement("button");b.type="button";b.textContent=q;b.onclick=function(){ask(q)};c.appendChild(b)});msg.appendChild(c)}
+var SYS="Ti si asistent Studentske službe FON na sajtu portala. Odgovaraj kratko, na srpskom (latinica), samo na osnovu SADRŽAJA SAJTA ispod. Ako informacije nema ili nisi siguran, reci to i uputi na šalter Studentske službe ili na sekciju Kontakt. Ne izmišljaj rokove, iznose ni kontakte. Kada je bitno, napomeni da su podaci informativni.\n\nSADRŽAJ SAJTA:\n";
+function ctx(){return SYS+document.querySelector("main").innerText.replace(/\n{2,}/g,"\n").slice(0,14000)+"\n\nPITANJA KORISNIKA (poslednje je aktuelno):"}
+async function ask(q){
+ if(busy||!q.trim())return;busy=true;$("#cs").disabled=true;
+ add("u",q);hist.push({role:"user",content:q});
+ var s=hist.slice(-5),m=s.map(function(x,i){return i==0?{role:"user",content:ctx()+"\n"+x.content}:x});
+ var out=add("b","…");
+ try{var t;if(sample){var r=await sample(m,{cache:false,onText:function(o){out.textContent=o.text||"…";msg.scrollTop=msg.scrollHeight}});t=r.text}else{var rs=await fetch("/api/chat",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({system:ctx(),messages:s})});if(!rs.ok)throw{code:"srv"};t=(await rs.json()).reply}out.textContent=t;hist.push({role:"assistant",content:t})}
+ catch(e){hist.pop();out.textContent=e&&e.code=="not_granted"?"Asistent nije odobren za ovu stranicu. Obratite se šalteru Studentske službe.":e&&e.code=="rate_limited"?"Previše pitanja u kratkom roku. Pokušajte ponovo za minut.":"Došlo je do greške. Pokušajte ponovo ili pogledajte sekciju Kontakt."}
+ busy=false;$("#cs").disabled=false;
+}
+$("#cf").addEventListener("submit",function(e){e.preventDefault();var v=$("#ci").value;$("#ci").value="";ask(v)});
+$("#cbtn").onclick=function(){box.classList.add("on");this.style.display="none";if(!msg.children.length)intro();$("#ci").focus()};
+$("#cx").onclick=function(){box.classList.remove("on");$("#cbtn").style.display="block"};
+try{if(window.claude&&claude.use)claude.use("sample").then(function(s){if(s){sample=s;$("#cbtn").style.display="block"}}).catch(function(){})}catch(e){}
+})();
+</script>
+</body>
+</html>
